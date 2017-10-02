@@ -45,6 +45,9 @@ func init() {
 	}
 }
 
+func mrSource() (string, string) {
+}
+
 func runMRCreate(cmd *cobra.Command, args []string) {
 	branch, err := git.CurrentBranch()
 	if err != nil {

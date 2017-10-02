@@ -189,6 +189,23 @@ func MergeRequest(project string, opts *gitlab.CreateMergeRequestOptions) (strin
 	return mr.WebURL, nil
 }
 
+func MergeRequestEdit(project string, mrID int, opts *gitlab.UpdateMergeRequestOptions) (string, error) {
+	if os.Getenv("DEBUG") != "" {
+		spew.Dump(opts)
+	}
+
+	p, err := FindProject(project)
+	if err != nil {
+		return "", err
+	}
+
+	mr, _, err := lab.MergeRequests.UpdateMergeRequest(p.ID, mrID, opts)
+	if err != nil {
+		return "", err
+	}
+	return mr.WebURL, nil
+}
+
 func ListMRs(project string, opts *gitlab.ListMergeRequestsOptions) ([]*gitlab.MergeRequest, error) {
 	p, err := FindProject(project)
 	if err != nil {
